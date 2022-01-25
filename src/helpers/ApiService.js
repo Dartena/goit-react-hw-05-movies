@@ -27,10 +27,14 @@ class ApiService {
     const url = `${BASE_URL}/movie/${id}?api_key=${KEY}&language=ru-RU`;
     const response = await fetch(url);
     const result = await response.json();
+    this.console(result);
+    if (result.success === false) {
+      return result;
+    }
     if (result.poster_path)
       result.poster_path =
         "https://image.tmdb.org/t/p/w500" + result.poster_path;
-    result.genres = result.genres.map((genre) => genre.name);
+    if (result.genres) result.genres = result.genres.map((genre) => genre.name);
     prepareForShow(result);
     return result;
   }

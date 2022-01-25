@@ -1,6 +1,7 @@
 import api from "../helpers/ApiService";
 import { Outlet, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import {
   MovieDetailsContainer,
   MovieInfo,
@@ -19,6 +20,21 @@ export default function MovieDetailsPage() {
   useEffect(() => {
     async function getMovieInfo() {
       const movie = await api.getMovieById(movieId);
+      if (movie.success === false) {
+        return (
+          console.log("Toast here"),
+          toast.error(`${movie.status_message}`, {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          }),
+          navigate("/")
+        );
+      }
       setMovieInfo(movie);
     }
     getMovieInfo();

@@ -1,6 +1,6 @@
 import React, { lazy, Suspense } from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "./styles/index.css";
 import App from "./App";
 
@@ -25,6 +25,7 @@ ReactDOM.render(
               </Route>
             </Route>
           </Route>
+          <Route path="*" element={<Navigate to={"/"} replace={true} />} />
         </Routes>
       </Suspense>
     </BrowserRouter>
