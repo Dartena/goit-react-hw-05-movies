@@ -8,7 +8,7 @@ function App() {
   return (
     <AppDiv>
       <AppHeader />
-      <Outlet></Outlet>
+      <Outlet />
       <ToastContainer theme="colored" />
     </AppDiv>
   );
