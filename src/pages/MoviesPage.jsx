@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useState } from "react";
-import { Link, Outlet, useSearchParams } from "react-router-dom";
+import { Link, Outlet, useSearchParams, useLocation } from "react-router-dom";
 import SearchBar from "../components/SearchBar";
 import api from "../helpers/ApiService";
 
@@ -7,6 +7,7 @@ export default function MoviesPage() {
   const [searchParam, setSearchParam] = useSearchParams("");
   const [searchResult, setSearchResult] = useState([]);
   const [query, setQuery] = useState("");
+  const location = useLocation();
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
@@ -41,7 +42,9 @@ export default function MoviesPage() {
           {searchResult.map((result) => {
             return (
               <li key={result.id}>
-                <Link to={`/movies/${result.id}`}>{result.title}</Link>
+                <Link to={`/movies/${result.id}`} state={{ from: location }}>
+                  {result.title}
+                </Link>
               </li>
             );
           })}

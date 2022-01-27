@@ -1,5 +1,5 @@
 import api from "../helpers/ApiService";
-import { Outlet, useNavigate, useParams } from "react-router-dom";
+import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import {
@@ -16,6 +16,7 @@ export default function MovieDetailsPage() {
   const [movieInfo, setMovieInfo] = useState([]);
   let movieId = useParams().movieId;
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     async function getMovieInfo() {
@@ -42,7 +43,7 @@ export default function MovieDetailsPage() {
   }, []);
 
   const goBackHandle = () => {
-    navigate(-1);
+    navigate(location?.state?.from ?? "/");
   };
 
   return (
@@ -62,10 +63,16 @@ export default function MovieDetailsPage() {
         </MovieInfo>
       </MovieDetailsContainer>
       <div>
-        <SLink to={`/movies/${movieId}/cast`} replace={true}>
+        <SLink
+          to={`/movies/${movieId}/cast`}
+          state={{ from: location?.state?.from ?? "/" }}
+        >
           Cast
         </SLink>
-        <SLink to={`/movies/${movieId}/reviews`} replace={true}>
+        <SLink
+          to={`/movies/${movieId}/reviews`}
+          state={{ from: location?.state?.from ?? "/" }}
+        >
           Reviews
         </SLink>
       </div>
